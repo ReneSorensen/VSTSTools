@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "VisualBean-GitTag",
     "name": "Git Tag",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "publisher": "VisualBean",
     "targets": [
         {
@@ -12,7 +12,7 @@
     "galleryFlags": [
         "Public"
     ],
-    "description": "Simple task that tasks the current branch",
+    "description": "Simple task that tags the current branch with a specified tag",
     "categories": [
         "Build and release"
     ],

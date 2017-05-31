@@ -1,6 +1,6 @@
 This extension includes the following tasks
 
-··* Git Tag
+* Git Tag
 	
 ##Git Tag
 Tags the current branch with a specified tag.
