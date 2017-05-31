@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "VisualBean-GitTag",
     "name": "Git Tag",
-    "version": "1.0.4",
+    "version": "1.0.7",
     "publisher": "VisualBean",
     "targets": [
         {
