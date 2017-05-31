@@ -2,5 +2,4 @@
 VSTS tasks and extensions
 
 
-Can be installed from here
-https://marketplace.visualstudio.com/items?itemName=visualbean.VisualBean-GitTag
+The extensions can be found here https://goo.gl/xXzGbL
