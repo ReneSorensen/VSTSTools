@@ -5,8 +5,8 @@ $workingDir = $env:SYSTEM_DEFAULTWORKINGDIRECTORY
 $currentBranch = $env:BUILD_SOURCEBRANCHNAME 
 $tag = Get-VstsInput -Name tag -Require
 $shouldForceInput = Get-VstsInput -Name forceTagCreation 
-
 [boolean]$shouldForce = [System.Convert]::ToBoolean($shouldForceInput)
+
 if (!($env:SYSTEM_ACCESSTOKEN ))
 {
     throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build definition.
@@ -20,13 +20,15 @@ try {
 	Write-Verbose "Setting working directory to '$workingDir'."
     Set-Location $workingDir
 	
+	write-verbose "Checkout current branch."
 	write-host "##[command]"git checkout $currentBranch
 	git checkout $currentBranch
 	
-	Write-Verbose "Tagging '$currentBranch' with '$tag'"
+	Write-Verbose "Tagging '$currentBranch' with '$tag'."
     write-host "##[command]"git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
 	git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
 	
+	Write-Verbose "Push tag to origin"
 	write-host "##[command]"git push origin $tag
 	git push origin $tag
 } finally {
