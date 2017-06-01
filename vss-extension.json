@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "VisualBean-GitTag",
     "name": "Git Tag",
-    "version": "1.0.11",
+    "version": "1.0.14",
     "publisher": "VisualBean",
     "targets": [
         {
@@ -29,6 +29,26 @@
             "path": "overview.md"
         }
     },
+	 "tags": [
+    "tagging",
+    "git",
+    "build",
+    "tag"
+  ],
+	"screenshots": [
+    {
+      "path": "gittag-task.png"
+    },
+    {
+      "path": "gittag-input.png"
+    }
+  ],
+
+	"repository": {
+		"type":"git",
+      "uri": "https://github.com/VisualBean/VSTSTools"
+    }
+	,
     "contributions": [
         {
             "id": "GitTag",
