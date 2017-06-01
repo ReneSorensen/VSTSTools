@@ -4,7 +4,7 @@ param()
 $workingDir = $env:SYSTEM_DEFAULTWORKINGDIRECTORY 
 $currentBranch = $env:BUILD_SOURCEBRANCHNAME 
 $tag = Get-VstsInput -Name tag -Require
-
+$shouldForce = Get-VstsInput -Name forceTagCreation 
 if (!($env:SYSTEM_ACCESSTOKEN ))
 {
     throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build definition.
@@ -19,7 +19,7 @@ try {
     Set-Location $workingDir
 	git checkout $currentBranch
 	Write-Verbose "Tagging '$currentBranch' with '$tag'"
-    git tag $tag $currentBranch
+    git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
 	
 	git push origin $tag
 	
