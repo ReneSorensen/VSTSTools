@@ -4,7 +4,9 @@ param()
 $workingDir = $env:SYSTEM_DEFAULTWORKINGDIRECTORY 
 $currentBranch = $env:BUILD_SOURCEBRANCHNAME 
 $tag = Get-VstsInput -Name tag -Require
-$shouldForce = Get-VstsInput -Name forceTagCreation 
+$shouldForceInput = Get-VstsInput -Name forceTagCreation 
+
+[boolean]$shouldForce = [System.Convert]::ToBoolean($shouldForceInput)
 if (!($env:SYSTEM_ACCESSTOKEN ))
 {
     throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build definition.
@@ -17,12 +19,16 @@ Trace-VstsEnteringInvocation $MyInvocation
 try {
 	Write-Verbose "Setting working directory to '$workingDir'."
     Set-Location $workingDir
+	
+	write-host "##[command]"git checkout $currentBranch
 	git checkout $currentBranch
+	
 	Write-Verbose "Tagging '$currentBranch' with '$tag'"
-    git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
+    write-host "##[command]"git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
+	git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
 	
+	write-host "##[command]"git push origin $tag
 	git push origin $tag
-	
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation
 }

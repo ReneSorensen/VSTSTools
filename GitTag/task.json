@@ -14,7 +14,7 @@
 	"version": {
 		"Major": "1",
 		"Minor": "0",
-		"Patch": "8"
+		"Patch": "21"
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "GitTag $(message)",
@@ -31,9 +31,9 @@
 		"name": "forceTagCreation",
 		"type": "boolean",
 		"label": "Force",
-		"defaultValue": "false",
+		"defaultValue": false,
 		"required": false,
-		"helpMarkDown": "If this is true, replace an existing tag with the given name (instead of failing).",
+		"helpMarkDown": "If this is true, replace an existing tag with the given name (instead of failing)."
 	}
 	],
 	"execution": {
