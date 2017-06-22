@@ -29,6 +29,10 @@ try {
 	git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
 	
 	Write-Verbose "Push tag to origin"
+	IF($shouldForce)
+	{
+		git push origin :refs/tags/$tag
+	}
 	write-host "##[command]"git push origin $tag
 	git push origin $tag
 } finally {
