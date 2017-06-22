@@ -14,7 +14,7 @@
 	"version": {
 		"Major": "1",
 		"Minor": "0",
-		"Patch": "22"
+		"Patch": "21"
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "GitTag $(message)",
