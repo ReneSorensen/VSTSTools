@@ -30,7 +30,11 @@ try {
 	
 	Write-Verbose "Push tag to origin"
 	write-host "##[command]"git push origin $tag
+	If($shouldForce){
+		git push origin --delete $tag
+	}
 	git push origin $tag
+	
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation
 }

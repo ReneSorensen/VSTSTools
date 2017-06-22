@@ -1,64 +1,64 @@
-{
-    "manifestVersion": 1,
-    "id": "VisualBean-GitTag",
-    "name": "Git Tag",
-    "version": "1.0.14",
-    "publisher": "VisualBean",
-    "targets": [
-        {
-            "id": "Microsoft.VisualStudio.Services"
-        }
-    ],
-    "galleryFlags": [
-        "Public"
-    ],
-    "description": "Simple task that tags the current branch with a specified tag",
-    "categories": [
-        "Build and release"
-    ],
-    "icons": {
-        "default": "spray.png"
-    },
-    "files": [
-        {
-            "path": "GitTag"
-        }
-    ],
-    "content": {
-        "details": {
-            "path": "overview.md"
-        }
-    },
-	 "tags": [
-    "tagging",
-    "git",
-    "build",
-    "tag"
-  ],
-	"screenshots": [
-    {
-      "path": "gittag-task.png"
-    },
-    {
-      "path": "gittag-input.png"
-    }
-  ],
-
-	"repository": {
-		"type":"git",
-      "uri": "https://github.com/VisualBean/VSTSTools"
-    }
-	,
-    "contributions": [
-        {
-            "id": "GitTag",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [
-                "ms.vss-distributed-task.tasks"
-            ],
-            "properties": {
-                "name": "GitTag"
-            }
-        }
-    ]
-}
+{
+    "manifestVersion": 1,
+    "id": "VisualBean-GitTag",
+    "name": "Git Tag",
+    "version": "1.0.14",
+    "publisher": "VisualBean",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "galleryFlags": [
+        "Public"
+    ],
+    "description": "Simple task that tags the current branch with a specified tag",
+    "categories": [
+        "Build and release"
+    ],
+    "icons": {
+        "default": "spray.png"
+    },
+    "files": [
+        {
+            "path": "GitTag"
+        }
+    ],
+    "content": {
+        "details": {
+            "path": "overview.md"
+        }
+    },
+	 "tags": [
+    "tagging",
+    "git",
+    "build",
+    "tag"
+  ],
+	"screenshots": [
+    {
+      "path": "gittag-task.png"
+    },
+    {
+      "path": "gittag-input.png"
+    }
+  ],
+
+	"repository": {
+		"type":"git",
+      "uri": "https://github.com/VisualBean/VSTSTools"
+    }
+	,
+    "contributions": [
+        {
+            "id": "GitTag",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "GitTag"
+            }
+        }
+    ]
+}
