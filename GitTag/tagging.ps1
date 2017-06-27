@@ -18,21 +18,25 @@ if (!($env:SYSTEM_ACCESSTOKEN ))
 Trace-VstsEnteringInvocation $MyInvocation
 try {
 	Write-Verbose "Setting working directory to '$workingDir'."
-    Set-Location $workingDir
+    	Set-Location $workingDir
 	
 	write-verbose "Checkout current branch."
 	write-host "##[command]"git checkout $currentBranch
 	git checkout $currentBranch
 	
+	IF($shouldForce)	
+	{	
+		write-verbose "Delete remote tag"
+		write-host"##[command]"git push origin :refs/tags/$tag
+		git push origin :refs/tags/$tag
+	}
+	
 	Write-Verbose "Tagging '$currentBranch' with '$tag'."
-    write-host "##[command]"git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
+    	write-host "##[command]"git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
 	git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
 	
 	Write-Verbose "Push tag to origin"
-	IF($shouldForce)
-	{
-		git push origin :refs/tags/$tag
-	}
+	
 	write-host "##[command]"git push origin $tag
 	git push origin $tag
 } finally {
