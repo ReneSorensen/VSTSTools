@@ -7,7 +7,7 @@ Copies files that have been added/modified/renamed/moved to a specified folder.
 
 ### Prerequisites
 
-* Repository must be VSTS Git.
+* Repository must be Git.
 * Allow scripts to access Oauth must be **Enabled**
 
 ## Credits
