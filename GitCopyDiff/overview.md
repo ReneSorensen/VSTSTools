@@ -1,9 +1,10 @@
 This extension includes the following tasks
 
-* Git Copy Changed Files.
+* Git Copy Diff.
 	
 ## Git Copy Changed Files
 Copies files that have been added/modified/renamed/moved to a specified folder.
+Folder structure can be flattened.
 
 ### Prerequisites
 
