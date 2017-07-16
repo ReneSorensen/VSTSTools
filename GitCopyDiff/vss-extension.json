@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "VisualBean-GitCopyDiff",
     "name": "Git Copy Diff",
-    "version": "1.0.9",
+    "version": "1.0.11",
     "publisher": "VisualBean",
     "targets": [
         {
@@ -34,6 +34,14 @@
     "Changes",	"Git Diff",
     "Build",
     "Git"
+  ],
+  	"screenshots": [
+    {
+      "path": "git-copydiff-input.png"
+    },
+    {
+      "path": "git-copydiff-change-types.png"
+    }
   ],
 	"repository": {
 		"type":"git",

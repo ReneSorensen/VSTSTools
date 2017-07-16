@@ -14,7 +14,7 @@
 	"version": {
 		"Major": "1",
 		"Minor": "0",
-		"Patch": "9"
+		"Patch": "10"
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "GitCopyDiff $(message)",
@@ -33,7 +33,7 @@
 		"label": "Change Type",
 		"defaultValue": "A,C,M,R,T",
 		"required": true,
-		"helpMarkDown": "Specify which files to move by change type",
+		"helpMarkDown": "Specify which files to copy by change type",
 		"options": {
                 "A": "Added",
 				"C": "Copied",
