@@ -1,0 +1,54 @@
+{
+    "manifestVersion": 1,
+    "id": "VisualBean-GitCopyDiff",
+    "name": "Git Copy Diff",
+    "version": "1.0.9",
+    "publisher": "VisualBean",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "galleryFlags": [
+        "Public"
+    ],
+    "description": "Tasks that copies changed files to a directory of choice",
+    "categories": [
+        "Build and release"
+    ],
+    "icons": {
+        "default": "list.png"
+    },
+    "files": [
+        {
+            "path": "GitCopyDiff"
+        }
+    ],
+    "content": {
+        "details": {
+            "path": "overview.md"
+        }
+    },
+	 "tags": [
+    "Copy",
+    "Changes",	"Git Diff",
+    "Build",
+    "Git"
+  ],
+	"repository": {
+		"type":"git",
+      "uri": "https://github.com/VisualBean/VSTSTools"
+    },
+    "contributions": [
+        {
+            "id": "GitCopyDiff",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "GitCopyDiff"
+            }
+        }
+    ]
+}
