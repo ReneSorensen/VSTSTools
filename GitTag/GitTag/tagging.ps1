@@ -33,12 +33,21 @@ try {
 	
 	Write-Verbose "Tagging '$currentBranch' with '$tag'."
     	write-host "##[command]"git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
-	git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
+	$errorMsg = git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag 2>&1
 	
 	Write-Verbose "Push tag to origin"
-	
 	write-host "##[command]"git push origin $tag
 	git push origin $tag
+	
+	if( $LastExitCode -ne 0 ){ 
+	if($errorMsg){
+	write-error $errorMsg
+	}
+	else
+	{
+	write-error "Something went wrong. Please check the logs."
+	}
+	}
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation
 }
