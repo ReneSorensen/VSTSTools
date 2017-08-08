@@ -1,8 +1,8 @@
 {
     "manifestVersion": 1,
     "id": "VisualBean-GitTag",
-    "name": "Git Tag",
-    "version": "1.0.28",
+    "name": "Git Tag",
+    "version": "1.0.29",
     "publisher": "VisualBean",
     "targets": [
         {

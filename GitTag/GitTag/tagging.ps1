@@ -27,7 +27,6 @@ try {
 	IF($shouldForce)	
 	{	
 		write-verbose "Delete remote tag"
-		write-host"##[command]"git push origin :refs/tags/$tag
 		git push origin :refs/tags/$tag
 	}
 	
