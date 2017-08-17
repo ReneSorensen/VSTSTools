@@ -18,26 +18,26 @@ try {
     Write-Verbose "Setting working directory to '$workingDir'."
     Set-Location $workingDir
 	
-    IF ($shouldForce) {	
-        write-verbose "Delete remote tag"
+    if ($shouldForce) {	
+        Write-Verbose "Delete remote tag"
         git push origin :refs/tags/$tag
     }
 	
     # We tag on the currently-checked out branch/commit.
     Write-Verbose "Tagging with '$tag'."
-    write-host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) $tag
+    Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) $tag
     $errorMsg = git tag (& {If ($shouldForce) {"-f"} Else {""}}) $tag 2>&1
 	
     Write-Verbose "Push tag to origin"
-    write-host "##[command]"git push origin $tag
+    Write-Host "##[command]"git push origin $tag
     git push origin $tag
 	
-    if ( $LastExitCode -ne 0 ) { 
+    if ($LastExitCode -ne 0) { 
         if ($errorMsg) {
-            write-error $errorMsg
+            Write-Error $errorMsg
         }
         else {
-            write-error "Something went wrong. Please check the logs."
+            Write-Error "Something went wrong. Please check the logs."
         }
     }
 }
