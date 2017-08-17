@@ -2,7 +2,6 @@
 param()
 
 $workingDir = $env:SYSTEM_DEFAULTWORKINGDIRECTORY 
-$currentBranch = $env:BUILD_SOURCEBRANCHNAME 
 $tag = Get-VstsInput -Name tag -Require
 $shouldForceInput = Get-VstsInput -Name forceTagCreation 
 [boolean]$shouldForce = [System.Convert]::ToBoolean($shouldForceInput)
@@ -20,17 +19,14 @@ try {
 	Write-Verbose "Setting working directory to '$workingDir'."
     	Set-Location $workingDir
 	
-	write-verbose "Checkout current branch."
-	write-host "##[command]"git checkout $currentBranch
-	git checkout $currentBranch
-	
 	IF($shouldForce)	
 	{	
 		write-verbose "Delete remote tag"
 		git push origin :refs/tags/$tag
 	}
 	
-	Write-Verbose "Tagging '$currentBranch' with '$tag'."
+	# We tag on the currently-checked out branch/commit.
+	Write-Verbose "Tagging with '$tag'."
     	write-host "##[command]"git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag
 	$errorMsg = git tag (&{If($shouldForce) {"-f"} Else {""}}) $tag 2>&1
 	
