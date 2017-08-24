@@ -37,15 +37,15 @@ try {
 	IF($shouldFlatten)
 	{
 		$changes | foreach {
-			Copy-Item $_ -Destination $destination
+			Copy-Item $_ -Destination "$destination"
 			}
 	}
 	else
 	{
 		$changes | foreach {
 		$destinationPath = join-path $destination $_;
-		New-Item -ItemType File -Path $destinationPath -Force | out-null
-		Copy-Item $_ -Destination $destinationPath -recurse -container;
+		New-Item -ItemType File -Path "$destinationPath" -Force | out-null
+		Copy-Item $_ -Destination "$destinationPath" -recurse -container;
 		}
 	}
 	
