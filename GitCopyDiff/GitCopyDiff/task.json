@@ -8,13 +8,12 @@
 	"category": "Utility",
 	"visibility": [
 		"Build",
-		"Release"
 	],
 	"demands": [],
 	"version": {
 		"Major": "1",
 		"Minor": "0",
-		"Patch": "34"
+		"Patch": "35"
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "GitCopyDiff $(message)",
