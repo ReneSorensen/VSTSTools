@@ -1,0 +1,62 @@
+{
+    "manifestVersion": 1,
+    "id": "VisualBean-GitTag-Release",
+    "name": "Git Tag - Release Edition",
+    "version": "1.0.1",
+    "publisher": "VisualBean",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "galleryFlags": [
+        "Public"
+    ],
+    "description": "Simple task that tags the current branch with a specified tag",
+    "categories": [
+        "Build and release"
+    ],
+    "icons": {
+        "default": "spray.png"
+    },
+    "files": [
+        {
+            "path": "GitTag"
+        }
+    ],
+    "content": {
+        "details": {
+            "path": "overview.md"
+        }
+    },
+    "tags": [
+        "tagging",
+        "git",
+        "release",
+        "tag"
+    ],
+    "screenshots": [
+        {
+            "path": "gittag-task.png"
+        },
+        {
+            "path": "gittag-input.png"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/VisualBean/VSTSTools"
+    },
+    "contributions": [
+        {
+            "id": "GitTag-Release",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "GitTag-Release"
+            }
+        }
+    ]
+}
