@@ -1,9 +1,9 @@
 {
-	"id": "59a7d740-450e-11e7-820e-fd60651f1ea5",
+	"id": "be6aa0ca-e62f-414d-aaa6-e9524b556482",
 	"name": "GitTag",
 	"friendlyName": "Git Tag",
 	"description": "A simple task that tags a branch",
-	"author": "Alex Carlsen",
+	"author": "ATP P&I IT",
 	"helpMarkDown": "tags the current branch with a specified tag. ### Prerequisites * Repository must be VSTS Git. * Allow scripts to access Oauth must be **Enabled** * Project Collection Build Service must have **Contribute** & **Create Tag** set to **Allow** or **Inherit Allow** for that particular repository",
 	"category": "Utility",
 	"visibility": [

@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "VisualBean-GitTag-Release",
     "name": "Git Tag - Release Edition",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "publisher": "VisualBean",
     "targets": [
         {
@@ -55,7 +55,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "GitTag-Release"
+                "name": "GitTag"
             }
         }
     ]
