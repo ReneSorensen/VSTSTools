@@ -39,8 +39,7 @@
                 "M": "Modified",
                 "R100": "Renamed",
                 "T": "Type Changed",
-				"D": "Deleted",
-				"A,C,M,R100,T":"All (Except deleted)"
+				"A,C,M,R100,T":"All"
             }
 	},
 	{
