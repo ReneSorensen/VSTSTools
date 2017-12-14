@@ -13,7 +13,7 @@
 	"version": {
 		"Major": "1",
 		"Minor": "0",
-		"Patch": "35"
+		"Patch": "36"
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "GitCopyDiff $(message)",
@@ -30,7 +30,7 @@
 		"name": "changeType",
 		"type": "pickList",
 		"label": "Change Type",
-		"defaultValue": "A,C,M,R,T",
+		"defaultValue": "A,C,M,R100,T",
 		"required": true,
 		"helpMarkDown": "Specify which files to copy by change type",
 		"options": {
@@ -39,7 +39,8 @@
                 "M": "Modified",
                 "R100": "Renamed",
                 "T": "Type Changed",
-				"A,C,M,R100,T":"All"
+				"D": "Deleted",
+				"A,C,M,R100,T":"All (Except deleted)"
             }
 	},
 	{
