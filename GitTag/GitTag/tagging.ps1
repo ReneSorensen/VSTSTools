@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param()
 
-$workingDir = $env:SYSTEM_DEFAULTWORKINGDIRECTORY 
+$workingDir = Get-VstsInput -Name workingdir -Require
 $tag = Get-VstsInput -Name tag -Require
 $shouldForceInput = Get-VstsInput -Name forceTagCreation 
 [boolean]$shouldForce = [System.Convert]::ToBoolean($shouldForceInput)
