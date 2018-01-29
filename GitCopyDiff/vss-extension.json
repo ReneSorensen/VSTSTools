@@ -2,8 +2,8 @@
     "manifestVersion": 1,
     "id": "ATP-GitCopyDiff",
     "name": "Git Copy Diff",
-    "version": "1.1.5",
     "publisher": "ATP",
+    "version": "1.1.11",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
