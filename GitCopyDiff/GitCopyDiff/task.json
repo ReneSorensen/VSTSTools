@@ -30,7 +30,7 @@
 		"name": "changeType",
 		"type": "pickList",
 		"label": "Change Type",
-		"defaultValue": "A,C,M,R100,T",
+		"defaultValue": "A,C,M,R,T",
 		"required": true,
 		"helpMarkDown": "Specify which files to copy by change type",
 		"options": {
