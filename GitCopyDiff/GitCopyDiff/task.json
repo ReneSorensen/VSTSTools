@@ -1,9 +1,9 @@
 {
-	"id": "c2f186c9-9a84-427b-bbbc-93f30eb1ac55",
+	"id": "f1d2356c-c929-43c1-a5bb-adb07e19dab5",
 	"name": "GitCopyDiff",
 	"friendlyName": "Git Copy Diff",
 	"description": "A task that copies added/modified/renamed/moved files to a specified directory.",
-	"author": "Alex Carlsen",
+	"author": "ATP P&I IT",
 	"helpMarkDown": "copies added/modified/renamed/moved files to a specified directory. ### Prerequisites * Repository must be Git. * Allow scripts to access Oauth must be **Enabled**",
 	"category": "Utility",
 	"visibility": [
@@ -37,9 +37,9 @@
                 "A": "Added",
 				"C": "Copied",
                 "M": "Modified",
-                "R100": "Renamed",
+                "R": "Renamed",
                 "T": "Type Changed",
-				"A,C,M,R100,T":"All"
+				"A,C,M,R,T":"All"
             }
 	},
 	{
