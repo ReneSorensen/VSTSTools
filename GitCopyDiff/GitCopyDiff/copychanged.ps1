@@ -30,7 +30,7 @@ try {
 	
 	git log -m -1 --name-status --pretty="format:" $currentCommit | foreach{
     $item = $_.Split([char]0x0009);
-    if($changeType.Contains($item[0])){
+    if($item[0].Contains($changeType)){
 		if($item[0].Contains("R")){
 			$changes += ,$item[2];
 		} else {
