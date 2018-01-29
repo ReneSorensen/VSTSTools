@@ -31,6 +31,7 @@ try {
 	git log -m -1 --name-status --pretty="format:" $currentCommit | foreach{
     $item = $_.Split([char]0x0009);
 	$item[0] = $item[0].substring(0,1);
+	Write-Verbose "Current change is: $_";
     if($changeType.Contains($item[0])){
 		if($item[0].Contains("R")){
 			$changes += ,$item[2];
