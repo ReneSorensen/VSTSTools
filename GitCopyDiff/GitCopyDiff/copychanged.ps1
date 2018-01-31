@@ -29,6 +29,9 @@ try {
 	write-host "##[command]"git log -m -1 --name-status --pretty="format:" $currentCommit
 	
 	git log -m -1 --name-status --pretty="format:" $currentCommit | foreach{
+	if($_ -eq "") {
+		return;
+	}    
     $item = $_.Split([char]0x0009);
 	$item[0] = $item[0].substring(0,1);
 	Write-Verbose "Current change is: $_";
