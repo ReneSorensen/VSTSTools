@@ -31,7 +31,8 @@
     },
 	 "tags": [
     "Copy",
-    "Changes",	"Git Diff",
+    "Changes",
+	"Git Diff",
     "Build",
     "Git"
   ],
@@ -45,7 +46,7 @@
   ],
 	"repository": {
 		"type":"git",
-      "uri": "https://github.com/VisualBean/VSTSTools"
+      "uri": "https://github.com/ReneSorensen/VSTSTools"
     },
     "contributions": [
         {
@@ -59,4 +60,7 @@
             }
         }
     ]
-}
+}
+
+
+
