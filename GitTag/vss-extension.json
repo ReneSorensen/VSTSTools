@@ -45,7 +45,7 @@
     ],
     "repository": {
         "type": "git",
-        "uri": "https://github.com/VisualBean/VSTSTools"
+        "uri": "https://github.com/ReneSorensen/VSTSTools"
     },
     "contributions": [
         {
