@@ -4,7 +4,10 @@ param()
 $workingDir = Get-VstsInput -Name workingdir -Require
 $tag = Get-VstsInput -Name tag -Require
 $shouldForceInput = Get-VstsInput -Name forceTagCreation 
+$useLightweightTagsInput = Get-VstsInput -Name useLightweightTags
+$tagMessage = Get-VstsInput -Name tagMessage
 [boolean]$shouldForce = [System.Convert]::ToBoolean($shouldForceInput)
+[boolean]$useLightweightTags = [System.Convert]::ToBoolean($useLightweightTagsInput)
 
 if (!($env:SYSTEM_ACCESSTOKEN )) {
     throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build definition.
@@ -25,8 +28,11 @@ try {
 	
     # We tag on the currently-checked out branch/commit.
     Write-Verbose "Tagging with '$tag'."
-    Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) $tag
-    $errorMsg = git tag (& {If ($shouldForce) {"-f"} Else {""}}) $tag 2>&1
+    if(!$tagMessage) {
+        $tagMessage = $tag
+    }
+    Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag -m "$tagMessage"
+    $errorMsg = git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag -m "$tagMessage" 2>&1  
 	
     Write-Verbose "Push tag to origin"
     Write-Host "##[command]"git push origin $tag
