@@ -3,7 +3,13 @@ This extension includes the following tasks
 * Git Tag
 	
 ## Git Tag
-Tags the current branch with a specified tag.
+Tags the current branch with a specified tag and pushes it to origin.
+
+## Features
+Default behaviour is to use annoted tags (can be opted out).
+Can force tag.
+Can add tag message.
+Any directory can be specified as git source folder.
 
 ### Prerequisites
 
