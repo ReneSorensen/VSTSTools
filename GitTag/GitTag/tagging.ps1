@@ -32,20 +32,20 @@ try {
         $tagMessage = $tag
     }
     Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag -m "$tagMessage"
-    $errorMsg = git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag -m "$tagMessage" 2>&1  
+    $tagOutput = git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag -m "$tagMessage" 2>&1  
 	
     Write-Verbose "Push tag to origin"
     Write-Host "##[command]"git push origin $tag
-    git push origin $tag
-	
+    $pushOutput =  git push origin $tag 2>&1
+
     if ($LastExitCode -ne 0) { 
-        if ($errorMsg) {
-            Write-Error $errorMsg
-        }
-        else {
-            Write-Error "Something went wrong. Please check the logs."
-        }
+        write-Host $tagOutput
+        Write-Host $pushOutput
+        Write-Error "Something went wrong. Please check the logs."
     }
+
+    write-verbose $tagOutput
+    Write-Verbose $pushOutput
 }
 finally {
     Trace-VstsLeavingInvocation $MyInvocation
