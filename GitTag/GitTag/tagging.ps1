@@ -1,9 +1,20 @@
 [CmdletBinding()]
 param()
+function showRedirectedOutput
+{
+    param ($output)
+
+    $output | ForEach-Object -Process `
+    {
+            Write-Host "$_"
+    }
+}
 
 $workingDir = Get-VstsInput -Name workingdir -Require
 $tag = Get-VstsInput -Name tag -Require
 $shouldForceInput = Get-VstsInput -Name forceTagCreation 
+$tagger = Get-VstsInput -Name tagUser
+$taggerEmail = Get-VstsInput -Name tagEmail
 $useLightweightTagsInput = Get-VstsInput -Name useLightweightTags
 $tagMessage = Get-VstsInput -Name tagMessage
 [boolean]$shouldForce = [System.Convert]::ToBoolean($shouldForceInput)
@@ -20,7 +31,10 @@ Trace-VstsEnteringInvocation $MyInvocation
 try {
     Write-Verbose "Setting working directory to '$workingDir'."
     Set-Location $workingDir
-	
+    
+    git config user.email "$taggerEmail"
+    git config user.name "$tagger"
+
     if ($shouldForce) {	
         Write-Verbose "Delete remote tag"
         git push origin :refs/tags/$tag
@@ -34,18 +48,26 @@ try {
     Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag -m "$tagMessage"
     $tagOutput = git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag -m "$tagMessage" 2>&1  
 	
-    Write-Verbose "Push tag to origin"
-    Write-Host "##[command]"git push origin $tag
-    $pushOutput =  git push origin $tag 2>&1
+    try {
+        $backupErrorActionPreference = $script:ErrorActionPreference
+        $script:ErrorActionPreference = 'Continue'
+        
+		Write-Verbose "Push tag to origin"
+		Write-Host "##[command]"git push origin $tag
+		$pushOutput =  git push origin $tag 2>&1
 
-    if ($LastExitCode -ne 0) { 
-        write-Host $tagOutput
-        Write-Host $pushOutput
-        Write-Error "Something went wrong. Please check the logs."
-    }
+		showRedirectedOutput $tagOutput
+		showRedirectedOutput $pushOutput
+		
+		if ($LastExitCode -ne 0) { 
+			Write-Error "Something went wrong. Please check the logs."
+		}
+	}
+	finally 
+	{
+		$script:ErrorActionPreference = $backupErrorActionPreference	
+	}
 
-    write-verbose $tagOutput
-    Write-Verbose $pushOutput
 }
 finally {
     Trace-VstsLeavingInvocation $MyInvocation

@@ -14,6 +14,7 @@
 		"Major": "4",
 		"Minor": "0",
 		"Patch": "1"
+		"Minor": "1",
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "GitTag $(message)",
@@ -25,6 +26,22 @@
 		"defaultValue": "$(build.SourcesDirectory)",
 		"required": true,
 		"helpMarkDown": "The working directory (The git root)."
+	},
+	{
+		"name":"tagUser",
+		"type": "string",
+		"label": "Tag User",
+		"defaultValue": "VSTS",
+		"required": true,
+		"helpMarkDown": "The user that tagged (Just for git history purposes)"
+	},
+	{
+		"name":"tagEmail",
+		"type": "string",
+		"label": "Tag Email",
+		"defaultValue": "noreply@example.com",
+		"required": true,
+		"helpMarkDown": "The user that taggeds email (Just for git history purposes)"
 	},
 	{
 		"name": "tag",
