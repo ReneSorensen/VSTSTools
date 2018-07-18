@@ -1,0 +1,21 @@
+{
+  "name": "gittag",
+  "version": "1.0.0",
+  "description": "A simple task that tags a branch",
+  "author": "Bernie Nowel",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/bernienowel/VSTSTools"
+  },
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "dependencies": {
+    "vsts-task-lib": "^2.6.0",
+    "git-exec": "0.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "10.5.2",
+    "typescript": "^2.9.2"
+  }
+}

@@ -76,6 +76,10 @@
 	}
 	],
 	"execution": {
+		"Node": {
+			"target": "tagging.js",
+			"argumentFormat": ""
+		},
 		"PowerShell3": {
 			"target": "tagging.ps1"
 		}
