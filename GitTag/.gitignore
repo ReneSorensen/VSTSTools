@@ -1,0 +1,5 @@
+node_modules
+.taskkey
+GitTag/*.js
+GitTag/*.js.map
+*.vsix
