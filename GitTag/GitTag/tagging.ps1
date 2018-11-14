@@ -45,8 +45,8 @@ try {
     if(!$tagMessage) {
         $tagMessage = $tag
     }
-    Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag -m "$tagMessage"
-    $tagOutput = git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag -m "$tagMessage" 2>&1  
+	Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag (& {If (-Not $useLightweightTags){"-m $tagMessage"}})
+    $tagOutput = git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag (& {If (-Not $useLightweightTags){"-m $tagMessage"}}) 2>&1 
 	
     try {
         $backupErrorActionPreference = $script:ErrorActionPreference

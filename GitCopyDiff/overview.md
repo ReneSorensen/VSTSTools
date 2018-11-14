@@ -1,9 +1,9 @@
 This extension includes the following tasks
 
-* Git Copy Diff.
+* Git Copy Diff between 2 commits
 	
 ## Git Copy Changed Files
-Copies files that have been added/modified/renamed/moved to a specified folder.
+Finds diff between to commits and copies files that have been added/modified/renamed/moved to a specified folder with extension \Changed and \Deleted.
 Folder structure can be flattened.
 
 ### Prerequisites

@@ -4,43 +4,51 @@
 	"friendlyName": "Git Copy Diff",
 	"description": "A task that copies added/modified/renamed/moved files to a specified directory.",
 	"author": "ATP P&I IT",
-	"helpMarkDown": "copies added/modified/renamed/moved files to a specified directory. ### Prerequisites * Repository must be Git. * Allow scripts to access Oauth must be **Enabled**",
+	"helpMarkDown": "copies added/modified/renamed/moved files to a specified folder with extension \Changed and \Deleted. ### Prerequisites * Repository must be Git. * Allow scripts to access Oauth must be **Enabled**",
 	"category": "Utility",
 	"visibility": [
 		"Build",
 	],
 	"demands": [],
 	"version": {
-		"Major": "1",
+		"Major": "2",
 		"Minor": "0",
-		"Patch": "39"
+		"Patch": "1"
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "GitCopyDiff $(message)",
 	"inputs": [
 	{
-			"name": "destination",
-            "type": "string",
-            "label": "Destination",
-            "defaultValue": "$(Build.ArtifactStagingDirectory)",
-            "required": true,
-            "helpMarkDown": "The directory where files should be placed."
+		"name": "workingdir",
+		"type": "string",
+		"label": "Working Directory",
+		"defaultValue": "$(SYSTEM.DEFAULTWORKINGDIRECTORY)",
+		"required": true,
+		"helpMarkDown": "The working directory (The git root)."
 	},
 	{
-		"name": "changeType",
-		"type": "pickList",
-		"label": "Change Type",
-		"defaultValue": "A,C,M,R,T",
+		"name": "currentcommit",
+		"type": "string",
+		"label": "Current commit",
+		"defaultValue": "",
+		"required": false,
+		"helpMarkDown": "The current commit id. If not set the HEAD will be use."
+	},
+	{
+		"name": "destination",
+		"type": "string",
+		"label": "Destination",
+		"defaultValue": "$(SYSTEM.ARTIFACTSDIRECTORY)",
 		"required": true,
-		"helpMarkDown": "Specify which files to copy by change type",
-		"options": {
-                "A": "Added",
-				"C": "Copied",
-                "M": "Modified",
-                "R": "Renamed",
-                "T": "Type Changed",
-				"A,C,M,R,T":"All"
-            }
+		"helpMarkDown": "The directory where files should be placed."
+	},
+	{
+		"name": "gittag",
+		"type": "string",
+		"label": "Tag",
+		"defaultValue": "$(build.buildNumber)",
+		"required": true,
+		"helpMarkDown": "Tag for given commit, the commit is used for finding the diff between the new one. Can be hashid."
 	},
 	{
 		"name": "flatten",

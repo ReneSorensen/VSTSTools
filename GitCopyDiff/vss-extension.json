@@ -3,7 +3,7 @@
     "id": "ATP-GitCopyDiff",
     "name": "Git Copy Diff",
     "publisher": "ATP",
-    "version": "1.1.16",
+    "version": "2.1.1",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
@@ -12,7 +12,7 @@
     "galleryFlags": [
         "Public"
     ],
-    "description": "Tasks that copies changed files to a directory of choice",
+    "description": "Tasks that copies changed files to a directory of choice with extension \Changed and \Deleted.",
     "categories": [
         "Build and release"
     ],
@@ -34,6 +34,7 @@
     "Changes",
 	"Git Diff",
     "Build",
+	"Release",
     "Git"
   ],
   	"screenshots": [

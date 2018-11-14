@@ -22,7 +22,7 @@
 		"name": "workingdir",
 		"type": "string",
 		"label": "Working Directory",
-		"defaultValue": "$(build.SourcesDirectory)",
+		"defaultValue": "$(SYSTEM.DEFAULTWORKINGDIRECTORY)",
 		"required": true,
 		"helpMarkDown": "The working directory (The git root)."
 	},

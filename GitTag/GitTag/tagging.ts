@@ -74,8 +74,9 @@ async function run() {
         await repoExecAsync(repo, `config user.name "${tagger}"`);
 
         var forceCmd = shouldForce ? "-f" : "";
-        var lightweightCmd = useLightweightTags ? "-a": "";
-        var tagCmd = `tag "${tag}" ${forceCmd} ${lightweightCmd} -m "${tagMessage}"`;
+        var lightweightCmdTag = useLightweightTags ? "": "-a";
+		var lightweightCmdMessage = useLightweightTags ? "": "-m ${tagMessage}";
+        var tagCmd = `tag ${forceCmd} ${lightweightCmdTag} "${tag}" ${lightweightCmdMessage}`;
 
         if (shouldForce) {
             console.log("Delete remote tag")
