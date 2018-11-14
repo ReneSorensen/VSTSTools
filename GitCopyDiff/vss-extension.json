@@ -1,43 +1,43 @@
 {
-    "manifestVersion": 1,
-    "id": "ATP-GitCopyDiff",
-    "name": "Git Copy Diff",
-    "publisher": "ATP",
-    "version": "2.1.1",
-    "targets": [
-        {
-            "id": "Microsoft.VisualStudio.Services"
-        }
-    ],
-    "galleryFlags": [
-        "Public"
-    ],
-    "description": "Tasks that copies changed files to a directory of choice with extension \Changed and \Deleted.",
-    "categories": [
-        "Build and release"
-    ],
-    "icons": {
-        "default": "list.png"
-    },
-    "files": [
-        {
-            "path": "GitCopyDiff"
-        }
-    ],
-    "content": {
-        "details": {
-            "path": "overview.md"
-        }
-    },
-	 "tags": [
+  "manifestVersion": 1,
+  "id": "ATP-GitCopyDiff",
+  "name": "Git Copy Diff",
+  "publisher": "ATP",
+  "version": "2.1.3",
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "galleryFlags": [
+    "Public"
+  ],
+  "description": "Tasks that copies changed files to a directory of choice with extension Changed and Deleted folder.",
+  "categories": [
+    "Build and release"
+  ],
+  "icons": {
+    "default": "list.png"
+  },
+  "files": [
+    {
+      "path": "GitCopyDiff"
+    }
+  ],
+  "content": {
+    "details": {
+      "path": "overview.md"
+    }
+  },
+  "tags": [
     "Copy",
     "Changes",
-	"Git Diff",
+    "Git Diff",
     "Build",
-	"Release",
+    "Release",
     "Git"
   ],
-  	"screenshots": [
+  "screenshots": [
     {
       "path": "git-copydiff-input.png"
     },
@@ -45,23 +45,20 @@
       "path": "git-copydiff-change-types.png"
     }
   ],
-	"repository": {
-		"type":"git",
-      "uri": "https://github.com/ReneSorensen/VSTSTools"
-    },
-    "contributions": [
-        {
-            "id": "GitCopyDiff",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [
-                "ms.vss-distributed-task.tasks"
-            ],
-            "properties": {
-                "name": "GitCopyDiff"
-            }
-        }
-    ]
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/ReneSorensen/VSTSTools"
+  },
+  "contributions": [
+    {
+      "id": "GitCopyDiff",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "GitCopyDiff"
+      }
+    }
+  ]
 }
-
-
-
