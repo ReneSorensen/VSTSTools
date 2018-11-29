@@ -1,9 +1,12 @@
 {
     "manifestVersion": 1,
     "id": "ATP-SQLplusExecuter-Release",
+    "version": "1.0.3",
     "name": "SQLplus Executer - Release Edition",
-    "version": "1.0.1",
     "publisher": "ATP",
+	"categories": [
+        "Azure Pipelines"
+    ],
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
@@ -13,9 +16,7 @@
         "Public"
     ],
     "description": "Task that execute sql-files using SQLplus",
-    "categories": [
-        "Build and release"
-    ],
+    
     "icons": {
         "default": "SQLplusExecuter.png"
     },
