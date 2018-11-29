@@ -2,47 +2,66 @@
 param()
 
 # Find the hashId for the commit, using tag or id
-function GetGitHashId([String] $rev_arg) {
+function GetGitHashId([String] $revArg) {
+	Write-Host "GetGitHashId revArg: " $revArg
     try {
-        if(($rev_arg -eq $Null) -or ($rev_arg -eq '')) {
-            Write-Verbose "rev_arg has no value"
+        if(($revArg -eq $Null) -or ($revArg -eq '')) {
+            Write-Verbose "revArg has no value"
             return $Null
         }
-        $a = git rev-parse $rev_arg;
+		Write-Host "##[command]"git rev-parse $revArg
+        $a = git rev-parse $revArg;
         if (-not $? -Or $a -eq $Null) {
             Write-Verbose "Unknown revision or path not in the working tree"
             return $Null
         }
-        Write-Verbose "HashId for $($rev_arg) is " $a
+        Write-Host "HashId for $($revArg) is " $a
         return $a
     } catch {
-        throw ("Error: Something went wonky")
+        throw ("Error: Something went wrong. Please check the logs.")
     }
 }
 
 # Copy file to destination
-function CopyFileToDestination([String] $file_arg, [String] $destination_arg) {
-	Write-Verbose "File: " $file_arg " Destination: "$destination_arg
+function CopyFileToDestination([String] $fileArg, [String] $destinationArg) {
+	Write-Host "CopyFileToDestination File: " $fileArg " Destination: "$destinationArg
 	if($shouldFlatten)
 	{
-		New-Item -ItemType Directory -Path "$destination_arg" -Force | out-null
-		Copy-Item $file_arg -Destination "$destination_arg"
+		New-Item -ItemType Directory -Path "$destinationArg" -Force | out-null
+		Copy-Item $fileArg -Destination "$destinationArg"
 	}
 	else
 	{
-		$destinationPath = join-path $destination_arg $file_arg;
+		$destinationPath = join-path $destinationArg (Split-Path -parent $fileArg);
 		Write-Verbose $destinationPath
 		New-Item -ItemType Directory -Path "$destinationPath" -Force | out-null
-		Copy-Item $file_arg -Destination "$destinationPath" -recurse -container;
+		Copy-Item $fileArg -Destination "$destinationPath" -recurse -container;
+	}
+}
+
+# Delete file, insert removing command
+function DeleteFileFromDestination([String] $deleteFileArg, [String] $deleteDestinationArg) {
+	Write-Host "DeleteFileFromDestination File: " $deleteFileArg " Destination: "$deleteDestinationArg
+	$deleteText = "Remove-Item $($deleteFileArg) -ErrorAction Ignore"
+	Write-Host "##[command]"$deleteText
+	if (Test-Path $deleteDestinationArg\$FilesToBeDelete) {
+		Add-Content -Path "$deleteDestinationArg\$FilesToBeDelete" -Value $deleteText
+	} else {
+		New-Item -ItemType Directory -Path "$deleteDestinationArg" -Force | out-null
+		Set-Content -Path "$deleteDestinationArg\$FilesToBeDelete" -Value $deleteText -Force
 	}
 }
 
 $workingDir = Get-VstsInput -Name workingdir -Require
 $currentCommitInput = Get-VstsInput -Name currentcommit
 $destination = Get-VstsInput -Name destination -Require
+$changeTypeInput = Get-VstsInput -Name changeType -Require
 $gitTag = Get-VstsInput -Name gittag -Require
-$shouldFlattenInput = Get-VstsInput -Name flatten 
+$shouldFlattenInput = Get-VstsInput -Name flatten
+$changeType = $changeTypeInput.split(",")
 [boolean]$shouldFlatten = [System.Convert]::ToBoolean($shouldFlattenInput)
+
+$FilesToBeDelete = "FilesToBeDelete.ps1"
 
 if (!(Get-VstsTaskVariable -Name "System.AccessToken")) {
     throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build definition.
@@ -60,39 +79,39 @@ if(($currentCommitInput -eq $Null) -or ($currentCommitInput -eq '')) {
 # https://github.com/Microsoft/vsts-task-lib
 Trace-VstsEnteringInvocation $MyInvocation
 try {
-	Write-Verbose "Setting working directory to '$workingDir'."
+	Write-Host "Setting working directory to '$workingDir'."
 	Set-Location $workingDir
-	Write-Verbose "Current commit is $currentCommit"
+	Write-Host "Current commit is $currentCommit"
 	
 	git config core.quotepath off
 	[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 	
 	# Get the commit SHA-1 hash ID from $currentCommit
-	Set-Variable -name new_commit_hash -Value (GetGitHashId -rev_arg "$($currentCommit)")
-	write-Verbose "New commit head hashid: " $new_commit_hash
+	Set-Variable -name new_commit_hash -Value (GetGitHashId -revArg "$($currentCommit)")
+	Write-Host "New commit head hashid: " $new_commit_hash
 
 	# Get the commit SHA-1 hash ID from tag
-	Set-Variable -name old_commit_hash -Value (GetGitHashId -rev_arg "$($gitTag)")
+	Set-Variable -name old_commit_hash -Value (GetGitHashId -revArg "$($gitTag)")
 	# If commit not have been found, get the first commit form repo
 	if(($old_commit_hash -eq $Null) -or ($old_commit_hash -eq '')) {
 		$old_commit_hash = git rev-list --max-parents=0 $currentCommit
 	}
-	Write-Verbose "Old commit TAG hashid: " $old_commit_hash
+	Write-Host "Old commit TAG hashid: " $old_commit_hash
 	
 	# Diff between the two commits
 	Write-Host "##[command]"git diff --name-status "$old_commit_hash $new_commit_hash"
 	git diff --name-status $old_commit_hash $new_commit_hash | foreach{
 		$item = @();
 		$item = $_.Split([char]0x0009);
-		Write-Verbose $item
-		if($item.length -gt 1){
+		Write-Host $item
+		if(($item.length -gt 1) -and ($changeType.Contains($item[0].Substring(0,1)))) {
 			if($item[0].Contains("D")){
-				CopyFileToDestination -file_arg $item[1] -destination_arg "$destination\Deleted"
+				DeleteFileFromDestination -deleteFileArg $item[1] -deleteDestinationArg "$destination\Deleted"
 			} elseif($item[0].Contains("R")){
-				CopyFileToDestination -file_arg $item[2] -destination_arg "$destination\Changes"
-				CopyFileToDestination -file_arg $item[1] -destination_arg "$destination\Deleted"
+				CopyFileToDestination -fileArg $item[2] -destinationArg "$destination\Changes"
+				DeleteFileFromDestination -deleteFileArg $item[1] -deleteDestinationArg "$destination\Deleted"
 			} else {
-				CopyFileToDestination -file_arg $item[1] -destination_arg "$destination\Changes"
+				CopyFileToDestination -fileArg $item[1] -destinationArg "$destination\Changes"
 			}
 		}
 	}

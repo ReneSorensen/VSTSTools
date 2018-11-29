@@ -32,9 +32,9 @@ try {
     Write-Verbose "Setting working directory to '$workingDir'."
     Set-Location $workingDir
     
-    git config user.email "$taggerEmail"
-    git config user.name "$tagger"
-
+	git config user.email "$taggerEmail"
+	git config user.name "$tagger"
+    
     if ($shouldForce) {	
         Write-Verbose "Delete remote tag"
         git push origin :refs/tags/$tag

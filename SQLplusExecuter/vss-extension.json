@@ -1,9 +1,9 @@
 {
     "manifestVersion": 1,
-    "id": "VisualBean-GitTag-Release",
-    "name": "Git Tag - Release Edition",
-    "version": "1.0.2",
-    "publisher": "VisualBean",
+    "id": "ATP-SQLplusExecuter-Release",
+    "name": "SQLplus Executer - Release Edition",
+    "version": "1.0.1",
+    "publisher": "ATP",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
@@ -12,16 +12,16 @@
     "galleryFlags": [
         "Public"
     ],
-    "description": "Simple task that tags the current branch with a specified tag",
+    "description": "Task that execute sql-files using SQLplus",
     "categories": [
         "Build and release"
     ],
     "icons": {
-        "default": "spray.png"
+        "default": "SQLplusExecuter.png"
     },
     "files": [
         {
-            "path": "GitTag"
+            "path": "SQLplusExecuter"
         }
     ],
     "content": {
@@ -30,32 +30,32 @@
         }
     },
     "tags": [
-        "tagging",
-        "git",
-        "release",
-        "tag"
+        "oracle",
+        "sqlplus",
+        "scripts",
+        "build"
     ],
     "screenshots": [
         {
-            "path": "gittag-task.png"
+            "path": "SQLplusExecuter-task.png"
         },
         {
-            "path": "gittag-input.png"
+            "path": "SQLplusExecuter-input.png"
         }
     ],
     "repository": {
         "type": "git",
-        "uri": "https://github.com/VisualBean/VSTSTools"
+        "uri": "https://github.com/ReneSorensen/VSTSTools"
     },
     "contributions": [
         {
-            "id": "GitTag-Release",
+            "id": "SQLplusExecuter-Release",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "GitTag"
+                "name": "SQLplusExecuter"
             }
         }
     ]

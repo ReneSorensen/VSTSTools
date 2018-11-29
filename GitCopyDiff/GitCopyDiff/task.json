@@ -11,7 +11,7 @@
   ],
   "demands": [],
   "version": {
-    "Major": "2",
+    "Major": "3",
     "Minor": "0",
     "Patch": "1"
   },
@@ -41,6 +41,23 @@
       "defaultValue": "$(SYSTEM.ARTIFACTSDIRECTORY)",
       "required": true,
       "helpMarkDown": "The directory where files should be placed."
+    },
+    {
+      "name": "changeType",
+      "type": "pickList",
+      "label": "Change Type",
+      "defaultValue": "A,C,D,M,R,T",
+      "required": true,
+      "helpMarkDown": "Specify which files to copy by change type",
+      "options": {
+        "A": "Added",
+        "C": "Copied",
+        "D": "Deleted",
+        "M": "Modified",
+        "R": "Renamed",
+        "T": "Type Changed",
+        "A,C,D,M,R,T": "All"
+      }
     },
     {
       "name": "gittag",
