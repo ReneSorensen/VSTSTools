@@ -35,8 +35,8 @@ async function run() {
         var workingDir = tl.getInput('workingdir', true);
         var tag = tl.getInput('tag', true);
         var shouldForce = tl.getBoolInput('forceTagCreation');
-        var tagger = tl.getInput('tagUser', true);
-        var taggerEmail = tl.getInput('tagEmail', true);
+        var tagger = tl.getInput('tagUser');
+        var taggerEmail = tl.getInput('tagEmail');
         var useLightweightTags = tl.getBoolInput('useLightweightTags');
         var tagMessage = tl.getInput('tagMessage');
         tagMessage = tagMessage || tag;
@@ -70,8 +70,11 @@ async function run() {
         }
         catch {}
 
-        await repoExecAsync(repo, `config user.email "${taggerEmail}"`);
-        await repoExecAsync(repo, `config user.name "${tagger}"`);
+        if (taggerEmail != null)
+            await repoExecAsync(repo, `config user.email "${taggerEmail}"`);
+        
+        if (tagger != null)
+            await repoExecAsync(repo, `config user.name "${tagger}"`);
 
         var forceCmd = shouldForce ? "-f" : "";
         var lightweightCmdTag = useLightweightTags ? "": "-a";
