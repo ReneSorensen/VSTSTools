@@ -7,7 +7,7 @@
   "helpMarkDown": "copies added/modified/renamed/moved files to a specified folder with extension Changed and Deleted. ### Prerequisites * Repository must be Git. * Allow scripts to access Oauth must be **Enabled**",
   "category": "Utility",
   "visibility": [
-    "Build",
+    "Build"
   ],
   "demands": [],
   "version": {

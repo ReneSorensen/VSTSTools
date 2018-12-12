@@ -12,8 +12,8 @@
 	"demands": [],
 	"version": {
 		"Major": "1",
-		"Minor": "0",
-		"Patch": "1"
+		"Minor": "1",
+		"Patch": "0"
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "SQLplusExecuter $(message)",
@@ -28,9 +28,9 @@
 	},
 	{
 		"name": "includefiles",
-		"type": "string",
+		"type": "array",
 		"label": "Type of files to executed",
-		"defaultValue": "@('.sql')",
+		"defaultValue": "[\".sql\",\".txt\"]",
 		"required": true,
 		"helpMarkDown": "Type of files the task will execute"
 	},

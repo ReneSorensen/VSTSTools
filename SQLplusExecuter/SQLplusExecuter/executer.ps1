@@ -10,10 +10,14 @@ if (!($env:SYSTEM_ACCESSTOKEN )) {
 			Also, give 'Project Collection Build Service' 'Contribute' and 'Create Tag' permissions - Cog -> Version Control -> {Select Repository/ies}")
 }
 
+$includeTypes = @()
 $ExecutedFiles = @()
 $FilesToBeExecute = @()
 $Files = @()
 $dateformat =  Get-Date -Format "yyyyMMdd#HHmmss"
+
+$includeTypes = $includeFiles | ConvertFrom-Json
+Write-Host "Type of files to executed: $($includeTypes)"
 
 # For more information on the VSTS Task SDK:
 # https://github.com/Microsoft/vsts-task-lib
@@ -21,7 +25,7 @@ Trace-VstsEnteringInvocation $MyInvocation
 try {
 	# Get files or file and put them in array
     if(Test-Path $workingDir -pathType container){
-		$Files = Get-ChildItem -Path $workingDir | Where-Object { $includeFiles -contains $_.Extension } | Sort-Object | % {
+		$Files = Get-ChildItem -Path $workingDir | Where-Object { $includeTypes -contains $_.Extension } | Sort-Object | % {
 			'@' + $_.Name
 		}
 		# Set working directory
