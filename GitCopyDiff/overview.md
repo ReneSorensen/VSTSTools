@@ -3,14 +3,14 @@ This extension includes the following tasks
 * Git Copy Diff between 2 commits
 	
 ## Git Copy Changed Files
-Finds git-diff between to commits and copies files that have been added/modified/renamed/moved to a specified folder with extension \Changed. It also create one file in the folder \Deleted where remove command of all the files withc where remove from reposity.
+Finds git-diff between two commits and copies files that have been added/modified/renamed/moved to a specified folder with extension \Changed. It also create one file in the folder \Deleted which files should be removed from reposity.
 
 ## Features
-Default behaviour is to use annoted tags (can be opted out).
-The changed folder structure can be set to flattened.
-Can force tag.
-Can add tag message.
-Any directory can be specified as git source folder.
+The is between "Current commit" and "Tag"
+"Current commit" use commit-id and is not set HEAD will be used.
+Tag can be tag for given commit or can be hashid. If commit is not found the first commit will be used.
+You can specify which files to copy by change type
+Flatten directory structure (all files to same directory)
 
 ### Prerequisites
 

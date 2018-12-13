@@ -5,14 +5,9 @@ $workingDir = Get-VstsInput -Name workingdir -Require
 $includeFiles = Get-VstsInput -Name includefiles -Require
 $logFilesFolder = Get-VstsInput -Name logfilesfolder -Require
 
-if (!($env:SYSTEM_ACCESSTOKEN )) {
-    throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build definition.
-			Also, give 'Project Collection Build Service' 'Contribute' and 'Create Tag' permissions - Cog -> Version Control -> {Select Repository/ies}")
-}
-
 $includeTypes = @()
 $ExecutedFiles = @()
-$FilesToBeExecute = @()
+$FilesToBeExecuted = @()
 $Files = @()
 $dateformat =  Get-Date -Format "yyyyMMdd#HHmmss"
 
@@ -37,7 +32,7 @@ try {
 		Set-Location -Path (Split-Path -Path $workingDir)
 	}
 	Write-Host "List of files:`n$($Files)"
-	$FilesToBeExecute = $Files
+	$FilesToBeExecuted = $Files
 
 	ForEach ($f in $Files){
 		# Run execution of file
@@ -54,17 +49,15 @@ try {
 			break
 		} else {
 			$ExecutedFiles += $f
-			$FilesToBeExecute = $FilesToBeExecute -ne $f
+			$FilesToBeExecuted = $FilesToBeExecuted -ne $f
 		}
 	}
 }
 finally {
     Trace-VstsLeavingInvocation $MyInvocation
-	if(($res -Match "Error") -or ($LastExitCode) -or ($FilesToBeExecute.Length > 0)){
-		Write-Host $res
-		Write-Host $LastExitCode 
-		Write-Host $FilesToBeExecute.Length
-		Write-Error ("ERROR`nthe following files where not executed:`n$($FilesToBeExecute)`nLog from database:`n$($res)")
+	if(($res -Match "Error") -or ($LastExitCode) -or ($FilesToBeExecuted.Length -gt 0)){
+		Write-Host ("The following files where executed:`n$($ExecutedFiles)")
+		Write-Error ("ERROR`nthe following files where not executed:`n$($FilesToBeExecuted)`nLog from database:`n$($res)")
 		exit 1
 	}
 }
