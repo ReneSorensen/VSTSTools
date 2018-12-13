@@ -6,7 +6,7 @@ This extension includes the following tasks
 Finds git-diff between two commits and copies files that have been added/modified/renamed/moved to a specified folder with extension \Changed. It also create one file in the folder \Deleted which files should be removed from reposity.
 
 ## Features
-The is between "Current commit" and "Tag"
+The diff is found between the two commits "Current commit" and "Tag"
 "Current commit" use commit-id and is not set HEAD will be used.
 Tag can be tag for given commit or can be hashid. If commit is not found the first commit will be used.
 You can specify which files to copy by change type
