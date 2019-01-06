@@ -78,7 +78,7 @@ async function run() {
 
         var forceCmd = shouldForce ? "-f" : "";
         var lightweightCmdTag = useLightweightTags ? "": "-a";
-		var lightweightCmdMessage = useLightweightTags ? "": "-m ${tagMessage}";
+		var lightweightCmdMessage = useLightweightTags ? "": `-m "${tagMessage}"`;
         var tagCmd = `tag ${forceCmd} ${lightweightCmdTag} "${tag}" ${lightweightCmdMessage}`;
 
         if (shouldForce) {

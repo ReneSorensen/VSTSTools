@@ -64,8 +64,7 @@ $changeType = $changeTypeInput.split(",")
 $FilesToBeDelete = "FilesToBeDelete.ps1"
 
 if (!(Get-VstsTaskVariable -Name "System.AccessToken")) {
-    throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build definition.
-			Also, give 'Project Collection Build Service' 'Contribute' and 'Create Tag' permissions - Cog -> Version Control -> {Select Repository/ies}")
+    throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the definition.")
 }
 
 # currentCommit is empty use HEAD
@@ -100,7 +99,7 @@ try {
 	
 	# Diff between the two commits
 	Write-Host "##[command]"git diff --name-status "$old_commit_hash $new_commit_hash"
-	git diff --name-status $old_commit_hash $new_commit_hash | foreach{
+	git diff --name-status $old_commit_hash $new_commit_hash | foreach {
 		$item = @();
 		$item = $_.Split([char]0x0009);
 		Write-Host $item
@@ -108,10 +107,10 @@ try {
 			if($item[0].Contains("D")){
 				DeleteFileFromDestination -deleteFileArg $item[1] -deleteDestinationArg "$destination\Deleted"
 			} elseif($item[0].Contains("R")){
-				CopyFileToDestination -fileArg $item[2] -destinationArg "$destination\Changes"
+				CopyFileToDestination -fileArg $item[2] -destinationArg "$destination\Changed"
 				DeleteFileFromDestination -deleteFileArg $item[1] -deleteDestinationArg "$destination\Deleted"
 			} else {
-				CopyFileToDestination -fileArg $item[1] -destinationArg "$destination\Changes"
+				CopyFileToDestination -fileArg $item[1] -destinationArg "$destination\Changed"
 			}
 		}
 	}
