@@ -20,14 +20,14 @@ Trace-VstsEnteringInvocation $MyInvocation
 try { 
 	Write-Host "Get files or file and put them in array, workdir: $($workingDir)"
     if(Test-Path $workingDir -pathType container){
-		$Files = Get-ChildItem -Recurse -Path $workingDir | Where-Object { $includeTypes -contains $_.Extension } | Sort-Object | % {
+		$Files = @(Get-ChildItem -Recurse -Path $workingDir | Where-Object { $includeTypes -contains $_.Extension } | Sort-Object | % {
 			'@' + $_.Fullname
-		}
+		})
 		# Set working directory
 		Set-Location -Path $workingDir
 	} 
 	elseif(Test-Path $workingDir -pathType leaf){
-		$Files = '@' + (Split-Path $workingDir -leaf)
+		$Files = @('@' + (Split-Path $workingDir -leaf))
 		# Set working directory
 		Set-Location -Path (Split-Path -Path $workingDir)
 	}
@@ -37,7 +37,8 @@ try {
 	ForEach ($f in $Files){
 		# Run execution of file
 		Write-Host "File to be execute: $($f)"
-		$logFile = [System.IO.Path]::Combine($logFilesFolder,$("{0}#$dateformat.log" -f $f ))
+		$filename = Split-Path $f -leaf
+		$logFile = [System.IO.Path]::Combine($logFilesFolder,$("{0}#$dateformat.log" -f $filename ))
 		#
 		$stmt  = "set hea off`n"
 		$stmt += "set errorlogging on`n"
