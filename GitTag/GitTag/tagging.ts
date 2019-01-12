@@ -28,7 +28,7 @@ async function run() {
 	try {
         
         if (!tl.getVariable("SYSTEM_ACCESSTOKEN")) {
-            throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build definition.\n" +
+            throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build or release definition.\n" +
                     "Also, give 'Project Collection Build Service' 'Contribute' and 'Create Tag' permissions - Cog -> Version Control -> {Select Repository/ies}");
         }
 
@@ -41,9 +41,9 @@ async function run() {
         var tagMessage = tl.getInput('tagMessage');
         tagMessage = tagMessage || tag;
 
-        if (!fs.existsSync(workingDir))
+        if (!fs.existsSync(workingDir)) {
             throw `Could not find directory ${workingDir}`;
-
+        }
         console.log(`Setting working directory to '${workingDir}'.`);
         var repo = new git(workingDir);
         try {
@@ -70,16 +70,19 @@ async function run() {
         }
         catch {}
 
-        if (taggerEmail != null)
+        if (taggerEmail != null) {
             await repoExecAsync(repo, `config user.email "${taggerEmail}"`);
-        
-        if (tagger != null)
+        }
+        if (tagger != null) {
             await repoExecAsync(repo, `config user.name "${tagger}"`);
-
+        }
         var forceCmd = shouldForce ? "-f" : "";
-        var lightweightCmdTag = useLightweightTags ? "": "-a";
-		var lightweightCmdMessage = useLightweightTags ? "": `-m "${tagMessage}"`;
-        var tagCmd = `tag ${forceCmd} ${lightweightCmdTag} "${tag}" ${lightweightCmdMessage}`;
+        var tagCmd;
+        if(useLightweightTags) {  
+            tagCmd = `tag ${forceCmd} "${tag}"`;
+         } else {
+            tagCmd = `tag ${forceCmd} -a "${tag}" -m "${tagMessage}"`;  
+         }
 
         if (shouldForce) {
             console.log("Delete remote tag")

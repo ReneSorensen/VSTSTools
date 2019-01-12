@@ -21,7 +21,7 @@ $tagMessage = Get-VstsInput -Name tagMessage
 [boolean]$useLightweightTags = [System.Convert]::ToBoolean($useLightweightTagsInput)
 
 if (!(Get-VstsTaskVariable -Name "System.AccessToken")) {
-    throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build definition.
+    throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build or release definition.
 			Also, give 'Project Collection Build Service' 'Contribute' and 'Create Tag' permissions - Cog -> Version Control -> {Select Repository/ies}")
 }
 
