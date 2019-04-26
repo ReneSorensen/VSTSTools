@@ -4,13 +4,16 @@ This extension includes the following tasks
 	
 ## Git Copy Changed Files
 Finds git-diff between two commits and copies files that have been added/modified/renamed/moved to a specified folder with extension \Changed. It also create one file in the folder \Deleted which files should be removed from reposity.
+\Changed and \Deleted folder will always be created even if nothing is stored in the folders
 
 ## Features
 The diff is found between the two commits "Current commit" and "Tag". 
-"Current commit" use commit-id and is not set HEAD will be used. 
-Tag can be tag for given commit or can be hashid. If commit is not found the first commit will be used.
+"Current commit" use commit-id and if not set, HEAD will be used. 
+Tag can be tag for given commit or can be hashid. If commit is not found, use branch as root if value is insert, if not the first commit will be used.
 You can specify which files to copy by change type. 
+Folder Changed and Deleted will be created even if there are no items to be found.
 Flatten directory structure (all files to same directory).
+
 
 ### Prerequisites
 

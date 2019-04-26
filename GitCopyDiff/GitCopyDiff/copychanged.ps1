@@ -58,6 +58,7 @@ $destination = Get-VstsInput -Name destination -Require
 $changeTypeInput = Get-VstsInput -Name changeType -Require
 $gitTag = Get-VstsInput -Name gittag -Require
 $shouldFlattenInput = Get-VstsInput -Name flatten
+$useBranchAsRoot = Get-VstsInput -Name branchAsRoot
 $changeType = $changeTypeInput.split(",")
 [boolean]$shouldFlatten = [System.Convert]::ToBoolean($shouldFlattenInput)
 
@@ -92,10 +93,21 @@ try {
 	# Get the commit SHA-1 hash ID from tag
 	Set-Variable -name old_commit_hash -Value (GetGitHashId -revArg "$($gitTag)")
 	# If commit not have been found, get the first commit form repo
+	if(($old_commit_hash -eq $Null) -or ($old_commit_hash -eq '') -and (-not ([string]::IsNullOrEmpty($useBranchAsRoot)))) {
+        Write-Host "If old commit not have been found try with TAG: " $useBranchAsRoot
+		Set-Variable -name old_commit_hash -Value (GetGitHashId -revArg "$($useBranchAsRoot)")
+	}
 	if(($old_commit_hash -eq $Null) -or ($old_commit_hash -eq '')) {
+        Write-Host "TAG: $($useBranchAsRoot) did not work using first commit"
 		$old_commit_hash = git rev-list --max-parents=0 $currentCommit
 	}
 	Write-Host "Old commit TAG hashid: " $old_commit_hash
+
+	# create Changed and Deleted folder
+	New-Item -ItemType Directory -Path "$destination\Deleted" -Force | out-null
+	New-Item -ItemType Directory -Path "$destination\Changed" -Force | out-null
+	Write-Host "Create Changed and Deleted folder"
+
 	
 	# Diff between the two commits
 	Write-Host "##[command]"git diff --name-status "$old_commit_hash $new_commit_hash"

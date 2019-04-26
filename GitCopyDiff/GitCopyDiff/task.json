@@ -11,9 +11,9 @@
   ],
   "demands": [],
   "version": {
-    "Major": "3",
+    "Major": "4",
     "Minor": "0",
-    "Patch": "2"
+    "Patch": "1"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "GitCopyDiff $(message)",
@@ -74,6 +74,14 @@
       "defaultValue": false,
       "required": false,
       "helpMarkDown": "Flatten directory structure (all files to same directory)"
+    },
+    {
+      "name": "branchAsRoot",
+      "type": "string",
+      "label": "Use branch as root",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Use this branch as root if TAG not found."
     }
   ],
   "execution": {
