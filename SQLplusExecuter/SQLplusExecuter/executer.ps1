@@ -34,18 +34,24 @@ try {
 	Write-Host "List of files:`n$($Files)"
 	$FilesToBeExecuted = $Files
 
+	if($Files.Length -eq 0 ){
+		Write-Error ("Error no files to be executed")
+		exit 1
+	}
+
 	ForEach ($f in $Files){
 		# Run execution of file
 		Write-Host "File to be execute: $($f)"
 		$filename = Split-Path $f -leaf
 		$logFile = [System.IO.Path]::Combine($logFilesFolder,$("{0}#$dateformat.log" -f $filename ))
+		Write-Host "Log file: " $logFile
 		#
 		$stmt  = "set hea off`n"
 		$stmt += "set errorlogging on`n"
 		$res = ($stmt | sqlplus /nolog $f )
 		Write-Host "Result: " $res
 		Write-Output $res | add-content $logFile
-		if(($res -Match "ORA-")-or ($LastExitCode)){
+		if(($res -Match "ORA-") -or ($LastExitCode) -or ($res -Match "SP2-0310")){
 			Write-Error ("Error has occurred in script $($f)")
 			break
 		} else {

@@ -6,6 +6,10 @@ This extension includes the following tasks
 Finds git-diff between two commits and copies files that have been added/modified/renamed/moved to a specified folder with extension \Changed. It also create one file in the folder \Deleted which files should be removed from reposity.
 \Changed and \Deleted folder will always be created even if nothing is stored in the folders
 
+## New features
+Added new folders "Added" and "Modified". 
+Files that have been added or modified will copied to changed as usual, files than have been added will also be copied to the new folder "Added" and modified files will be copied to the new folder "Modified".
+
 ## Features
 The diff is found between the two commits "Current commit" and "Tag". 
 "Current commit" use commit-id and if not set, HEAD will be used. 

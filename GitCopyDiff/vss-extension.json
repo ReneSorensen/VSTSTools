@@ -3,7 +3,7 @@
   "id": "ATP-GitCopyDiff",
   "name": "Git Copy Diff",
   "publisher": "ATP",
-  "version": "4.0.1",
+  "version": "5.0.1",
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"

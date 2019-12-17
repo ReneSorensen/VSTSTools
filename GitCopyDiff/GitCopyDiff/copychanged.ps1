@@ -11,7 +11,7 @@ function GetGitHashId([String] $revArg) {
         }
 		Write-Host "##[command]"git rev-parse $revArg
         $a = git rev-parse $revArg;
-        if (-not $? -Or $a -eq $Null) {
+        if (-not $? -Or $Null -eq $a) {
             Write-Verbose "Unknown revision or path not in the working tree"
             return $Null
         }
@@ -69,7 +69,7 @@ if (!(Get-VstsTaskVariable -Name "System.AccessToken")) {
 }
 
 # currentCommit is empty use HEAD
-if(($currentCommitInput -eq $Null) -or ($currentCommitInput -eq '')) {
+if(($Null -eq $currentCommitInput) -or ($currentCommitInput -eq '')) {
 		$currentCommit = "HEAD"
 } else {
 	$currentCommit = $currentCommitInput
@@ -93,11 +93,11 @@ try {
 	# Get the commit SHA-1 hash ID from tag
 	Set-Variable -name old_commit_hash -Value (GetGitHashId -revArg "$($gitTag)")
 	# If commit not have been found, get the first commit form repo
-	if(($old_commit_hash -eq $Null) -or ($old_commit_hash -eq '') -and (-not ([string]::IsNullOrEmpty($useBranchAsRoot)))) {
+	if(($Null -eq $old_commit_hash) -or ($old_commit_hash -eq '') -and (-not ([string]::IsNullOrEmpty($useBranchAsRoot)))) {
         Write-Host "If old commit not have been found try with TAG: " $useBranchAsRoot
 		Set-Variable -name old_commit_hash -Value (GetGitHashId -revArg "$($useBranchAsRoot)")
 	}
-	if(($old_commit_hash -eq $Null) -or ($old_commit_hash -eq '')) {
+	if(($Null -eq $old_commit_hash) -or ($old_commit_hash -eq '')) {
         Write-Host "TAG: $($useBranchAsRoot) did not work using first commit"
 		$old_commit_hash = git rev-list --max-parents=0 $currentCommit
 	}
@@ -105,9 +105,11 @@ try {
 
 	# create Changed and Deleted folder
 	New-Item -ItemType Directory -Path "$destination\Deleted" -Force | out-null
+	New-Item -ItemType Directory -Path "$destination\Modified" -Force | out-null
+	New-Item -ItemType Directory -Path "$destination\Added" -Force | out-null
 	New-Item -ItemType Directory -Path "$destination\Changed" -Force | out-null
-	Write-Host "Create Changed and Deleted folder"
-
+	Write-Host "Create Changed, Modified, Added and Deleted folder"
+	
 	
 	# Diff between the two commits
 	Write-Host "##[command]"git diff --name-status "$old_commit_hash $new_commit_hash"
@@ -119,9 +121,15 @@ try {
 			if($item[0].Contains("D")){
 				DeleteFileFromDestination -deleteFileArg $item[1] -deleteDestinationArg "$destination\Deleted"
 			} elseif($item[0].Contains("R")){
+				CopyFileToDestination -fileArg $item[2] -destinationArg "$destination\Added"
 				CopyFileToDestination -fileArg $item[2] -destinationArg "$destination\Changed"
 				DeleteFileFromDestination -deleteFileArg $item[1] -deleteDestinationArg "$destination\Deleted"
 			} else {
+				if($item[0].Contains("A")){
+					CopyFileToDestination -fileArg $item[1] -destinationArg "$destination\Added"
+				} elseif ($item[0].Contains("M")) {
+					CopyFileToDestination -fileArg $item[1] -destinationArg "$destination\Modified"
+				}
 				CopyFileToDestination -fileArg $item[1] -destinationArg "$destination\Changed"
 			}
 		}
