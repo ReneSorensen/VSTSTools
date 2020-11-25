@@ -24,18 +24,20 @@ function GetGitHashId([String] $revArg) {
 
 # Copy file to destination
 function CopyFileToDestination([String] $fileArg, [String] $destinationArg) {
-	Write-Host "CopyFileToDestination File: " $fileArg " Destination: "$destinationArg
+	$src = [Management.Automation.WildcardPattern]::Escape($fileArg)
+	
+	Write-Host "CopyFileToDestination File: " $src " Destination: "$destinationArg
 	if($shouldFlatten)
 	{
 		New-Item -ItemType Directory -Path "$destinationArg" -Force | out-null
-		Copy-Item $fileArg -Destination "$destinationArg"
+		Copy-Item $src -Destination "$destinationArg"
 	}
 	else
 	{
-		$destinationPath = join-path $destinationArg (Split-Path -parent $fileArg);
+		$destinationPath = join-path $destinationArg (Split-Path -parent $src);
 		Write-Verbose $destinationPath
 		New-Item -ItemType Directory -Path "$destinationPath" -Force | out-null
-		Copy-Item $fileArg -Destination "$destinationPath" -recurse -container;
+		Copy-Item $src -Destination "$destinationPath" -recurse -container;
 	}
 }
 
