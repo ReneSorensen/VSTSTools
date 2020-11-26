@@ -31,7 +31,7 @@ async function run() {
             throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build or release definition.\n" +
                     "Also, give 'Project Collection Build Service' 'Contribute' and 'Create Tag' permissions - Cog -> Version Control -> {Select Repository/ies}");
         }
-
+	var currentCommit = tl.getVariable("Build.SourceVersion")
         var workingDir = tl.getInput('workingdir', true);
         var tag = tl.getInput('tag', true);
         var shouldForce = tl.getBoolInput('forceTagCreation');
@@ -79,9 +79,9 @@ async function run() {
         var forceCmd = shouldForce ? "-f" : "";
         var tagCmd;
         if(useLightweightTags) {  
-            tagCmd = `tag ${forceCmd} "${tag}"`;
+            tagCmd = `tag ${forceCmd} "${tag}" ${currentCommit}`;
          } else {
-            tagCmd = `tag ${forceCmd} -a "${tag}" -m "${tagMessage}"`;  
+            tagCmd = `tag ${forceCmd} -a "${tag}" -m "${tagMessage}" ${currentCommit}`;  
          }
 
         if (shouldForce) {
