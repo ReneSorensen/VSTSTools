@@ -9,7 +9,7 @@ function showRedirectedOutput
             Write-Host "$_"
     }
 }
-
+$currentCommit = $env:BUILD_SOURCEVERSION
 $workingDir = Get-VstsInput -Name workingdir -Require
 $tag = Get-VstsInput -Name tag -Require
 $shouldForceInput = Get-VstsInput -Name forceTagCreation 
@@ -46,7 +46,7 @@ try {
         $tagMessage = $tag
     }
 	Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag (& {If (-Not $useLightweightTags){"-m $tagMessage"}})
-    $tagOutput = git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag (& {If (-Not $useLightweightTags){"-m $tagMessage"}}) 2>&1 
+    $tagOutput = git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag (& {If (-Not $useLightweightTags){"-m $tagMessage"}}) $currentCommit 2>&1 
 	
     try {
         $backupErrorActionPreference = $script:ErrorActionPreference
