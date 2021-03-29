@@ -106,7 +106,7 @@ function Initialize() {
 		}
 		if(($Null -eq $old_commit_hash) -or ($old_commit_hash -eq '')) {
 			Write-Host "TAG: $($useBranchAsRoot) did not work using first commit"
-			$old_commit_hash = git rev-list --max-parents=0 $currentCommit
+			Set-Variable -name $old_commit_hash -Value (git rev-list --max-parents=0 $currentCommit) -Scope Script
 		}
 		Write-Host "Old commit TAG hashid: " $old_commit_hash
     }
