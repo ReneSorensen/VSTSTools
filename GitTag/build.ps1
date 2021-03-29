@@ -12,5 +12,5 @@ if ($runFromBuildServer) {
     Move-Item .\node_modules .\GitTag\
 }
 else {
-    tfx extension create --manifest-globs vss-extension.json --rev-version
+    tfx extension create --manifest-globs vss-extension.json #--rev-version
 }

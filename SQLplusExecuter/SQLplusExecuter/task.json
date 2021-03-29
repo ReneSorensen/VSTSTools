@@ -13,7 +13,7 @@
 	"version": {
 		"Major": "1",
 		"Minor": "1",
-		"Patch": "2"
+		"Patch": "15"
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "SQLplusExecuter $(message)",
@@ -41,6 +41,14 @@
 		"defaultValue": "$(SYSTEM.DEFAULTWORKINGDIRECTORY)",
 		"required": true,
 		"helpMarkDown": "Folder where to put log-files."
+	},
+	{
+		"name": "failIfNothing",
+		"type": "string",
+		"label": "Fail if no files to process",
+		"defaultValue": "Yes",
+		"required": true,
+		"helMarkDown": "Check this option if you want the build to fail in case of no files to process."
 	}
 	],
 	"execution": {

@@ -1,1 +1,1 @@
-tfx extension create --rev-version --manifest-globs vss-extension.json
+tfx extension create --manifest-globs vss-extension.json #--rev-version

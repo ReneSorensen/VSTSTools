@@ -1,8 +1,8 @@
 {
   "name": "gittag",
   "version": "1.0.0",
-  "description": "A simple task that tags a branch",
-  "author": "Bernie Nowel",
+  "description": "A simple task that tags a commit",
+  "author": "ATP",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/bernienowel/VSTSTools"
@@ -11,12 +11,12 @@
     "build": "tsc -p ."
   },
   "dependencies": {
-    "vsts-task-lib": "^2.6.0",
+    "azure-pipelines-task-lib": "^3.1.0",
     "git-exec": "0.2.1"
   },
   "devDependencies": {
-    "@types/node": "^10.12.12",
-    "ts-node": "^7.0.1",
+    "@types/node": "^14.0.1",
+    "ts-node": "^9.1.1",
     "typescript": "^2.9.2"
   }
 }

@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "ATP-SQLplusExecuter-Release",
-    "version": "1.1.3",
+    "version": "1.1.15",
     "name": "SQLplus Executer - Release Edition",
     "publisher": "ATP",
 	"categories": [
@@ -27,7 +27,7 @@
     ],
     "content": {
         "details": {
-            "path": "overview.md"
+            "path": "readme.md"
         }
     },
     "tags": [

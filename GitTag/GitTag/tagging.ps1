@@ -9,7 +9,8 @@ function showRedirectedOutput
             Write-Host "$_"
     }
 }
-$currentCommit = $env:BUILD_SOURCEVERSION
+
+$currentCommitInput = Get-VstsInput -Name currentcommit
 $workingDir = Get-VstsInput -Name workingdir -Require
 $tag = Get-VstsInput -Name tag -Require
 $shouldForceInput = Get-VstsInput -Name forceTagCreation 
@@ -19,6 +20,14 @@ $useLightweightTagsInput = Get-VstsInput -Name useLightweightTags
 $tagMessage = Get-VstsInput -Name tagMessage
 [boolean]$shouldForce = [System.Convert]::ToBoolean($shouldForceInput)
 [boolean]$useLightweightTags = [System.Convert]::ToBoolean($useLightweightTagsInput)
+
+# currentCommitInput is empty use HEAD
+if(($Null -eq $currentCommitInput) -or ($currentCommitInput -eq '')) {
+    $Script:currentCommit = "HEAD"
+} else {
+    $Script:currentCommit = $currentCommitInput
+}
+Write-Host "Current commit is $currentCommit"
 
 if (!(Get-VstsTaskVariable -Name "System.AccessToken")) {
     throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build or release definition.
@@ -30,7 +39,7 @@ if (!(Get-VstsTaskVariable -Name "System.AccessToken")) {
 Trace-VstsEnteringInvocation $MyInvocation
 try {
     Write-Verbose "Setting working directory to '$workingDir'."
-    Set-Location $workingDir
+    Set-Location -LiteralPath $workingDir
     
 	git config user.email "$taggerEmail"
 	git config user.name "$tagger"
@@ -45,7 +54,7 @@ try {
     if(!$tagMessage) {
         $tagMessage = $tag
     }
-	Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag (& {If (-Not $useLightweightTags){"-m $tagMessage"}})
+	Write-Host "##[command]"git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag (& {If (-Not $useLightweightTags){"-m $tagMessage"}}) $currentCommit
     $tagOutput = git tag (& {If ($shouldForce) {"-f"} Else {""}}) (& {If ($useLightweightTags) {""} Else {"-a"}}) $tag (& {If (-Not $useLightweightTags){"-m $tagMessage"}}) $currentCommit 2>&1 
 	
     try {

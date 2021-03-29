@@ -1,4 +1,4 @@
-import tl = require('vsts-task-lib/task');
+import tl = require('azure-pipelines-task-lib/task');
 import git = require('git-exec');
 import fs = require('fs');
 
@@ -31,7 +31,8 @@ async function run() {
             throw ("OAuth token not found. Make sure to have 'Allow Scripts to Access OAuth Token' enabled in the build or release definition.\n" +
                     "Also, give 'Project Collection Build Service' 'Contribute' and 'Create Tag' permissions - Cog -> Version Control -> {Select Repository/ies}");
         }
-	var currentCommit = tl.getVariable("Build.SourceVersion")
+
+        var currentCommitInput = tl.getInput("currentcommit");
         var workingDir = tl.getInput('workingdir', true);
         var tag = tl.getInput('tag', true);
         var shouldForce = tl.getBoolInput('forceTagCreation');
@@ -40,6 +41,13 @@ async function run() {
         var useLightweightTags = tl.getBoolInput('useLightweightTags');
         var tagMessage = tl.getInput('tagMessage');
         tagMessage = tagMessage || tag;
+
+        var currentCommit;
+        if(typeof currentCommitInput != 'undefined' && currentCommitInput) {
+            currentCommit = currentCommitInput;
+        } else {
+            currentCommit = "HEAD";
+        }
 
         if (!fs.existsSync(workingDir)) {
             throw `Could not find directory ${workingDir}`;
@@ -79,9 +87,9 @@ async function run() {
         var forceCmd = shouldForce ? "-f" : "";
         var tagCmd;
         if(useLightweightTags) {  
-            tagCmd = `tag ${forceCmd} "${tag}" ${currentCommit}`;
+            tagCmd = `tag ${forceCmd} "${tag}" "${currentCommit}"`;
          } else {
-            tagCmd = `tag ${forceCmd} -a "${tag}" -m "${tagMessage}" ${currentCommit}`;  
+            tagCmd = `tag ${forceCmd} -a "${tag}" -m "${tagMessage}" "${currentCommit}"`;  
          }
 
         if (shouldForce) {

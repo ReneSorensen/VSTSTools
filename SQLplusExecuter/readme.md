@@ -5,6 +5,9 @@ This extension includes the following tasks
 ## SQPplus Executer
 Execute file or sorted files in folder using application SQLplus.
 
+## New Features
+New field if this is checked, the task will fail in the case of no files to process
+
 ## Features
 Set types of files and this files will be executed using SQLplus commands
 

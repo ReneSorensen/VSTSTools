@@ -11,7 +11,7 @@
   ],
   "demands": [],
   "version": {
-    "Major": "5",
+    "Major": "6",
     "Minor": "0",
     "Patch": "1"
   },
@@ -82,6 +82,30 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "Use this branch as root if TAG not found."
+    },
+    {
+      "name": "nameOfFileDeletedList",
+      "type": "string",
+      "label": "File name",
+      "defaultValue": "FilesToBeDelete.ps1",
+      "required": true,
+      "helpMarkDown": "The name of the file, that contains all url's to the files removed from the repository"
+    },
+    {
+      "name": "textBeforeFile",
+      "type": "string",
+      "label": "Text before file",
+      "defaultValue": "Remove-Item -LiteralPath '",
+      "required": false,
+      "helpMarkDown": "Text before the url to the deleted file from repository"
+    },
+    {
+      "name": "textAfterFile",
+      "type": "string",
+      "label": "Text after file",
+      "defaultValue": "' -ErrorAction Ignore",
+      "required": false,
+      "helpMarkDown": "Text after the url to the deleted file from repository"
     }
   ],
   "execution": {
