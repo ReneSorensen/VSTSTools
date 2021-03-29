@@ -1,4 +1,4 @@
-$runFromBuildServer = ($env:TF_Build -eq "True")
+$runFromBuildServer = "True" #($env:TF_Build -eq "True")
 
 Write-Host "Configure node / cross platform version"
 Write-Host "npm install"
