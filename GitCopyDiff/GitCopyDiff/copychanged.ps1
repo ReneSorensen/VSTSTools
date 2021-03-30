@@ -101,12 +101,13 @@ function Initialize() {
 
 		# If commit not have been found, get the first commit form repo
 		if(($Null -eq $old_commit_hash) -or ($old_commit_hash -eq '') -and (-not ([string]::IsNullOrEmpty($useBranchAsRoot)))) {
-			Write-Host "If old commit not have been found try with TAG: " $useBranchAsRoot
+			Write-Host "If old commit not have been found try with branchAsRoot as TAG: " $useBranchAsRoot
 			Set-Variable -name old_commit_hash -Value (GetGitHashId -revArg "$($useBranchAsRoot)") -Scope Script
 		}
 		if(($Null -eq $old_commit_hash) -or ($old_commit_hash -eq '')) {
-			Write-Host "TAG: $($useBranchAsRoot) did not work using first commit"
-			Set-Variable -name $old_commit_hash -Value (git rev-list --max-parents=0 $currentCommit) -Scope Script
+			Write-Host "GitTag and branchAsRoot did not work, using the first commit created for this repo"
+			Write-Host "##[command]"git rev-list --max-parents=0 "$currentCommit"
+			Set-Variable -name old_commit_hash -Value (git rev-list --max-parents=0 $currentCommit) -Scope Script
 		}
 		Write-Host "Old commit TAG hashid: " $old_commit_hash
     }

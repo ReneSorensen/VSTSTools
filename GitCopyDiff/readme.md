@@ -43,7 +43,7 @@ Files that have been added or modified will copied to changed as usual, files th
 ## Features
 The diff is found between the two commits "Current commit" and "Tag".
 "Current commit" use commit-id and if not set, HEAD will be used.
-Tag can be tag for given commit or can be hashid. If commit is not found, use branch as root if value is insert, if not the first commit will be used.
+GitTag can be tag for given commit or can be hashid. If commit is not found, use branchAsRoot if value is insert, if not the first commit will be used.
 You can specify which files to copy by change type.
 Folder Changed and Deleted will be created even if there are no items to be found.
 Flatten directory structure (all files to same directory).

@@ -13,7 +13,7 @@
   "version": {
     "Major": "6",
     "Minor": "0",
-    "Patch": "2"
+    "Patch": "3"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "GitCopyDiff $(message)",
@@ -79,9 +79,9 @@
       "name": "branchAsRoot",
       "type": "string",
       "label": "Use branch as root",
-      "defaultValue": "",
+      "defaultValue": "origin/master",
       "required": false,
-      "helpMarkDown": "Use this branch as root if TAG not found."
+      "helpMarkDown": "Use this branch as root if old commit (gittag) not found."
     },
     {
       "name": "nameOfFileDeletedList",
