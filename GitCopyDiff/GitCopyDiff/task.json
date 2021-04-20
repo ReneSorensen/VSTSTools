@@ -43,6 +43,14 @@
       "helpMarkDown": "The directory where files should be placed."
     },
     {
+      "name": "subDir",
+      "type": "string",
+      "label": "Sub Directory",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The directory where files in the Source."
+    },
+    {
       "name": "changeType",
       "type": "pickList",
       "label": "Change Type",
