@@ -38,6 +38,7 @@ function Initialize() {
 		$changeTypeInput = Get-VstsInput -Name changeType -Require
 		$currentCommitInput = Get-VstsInput -Name currentcommit
 		# Script scoped variables
+		$Script:subDir = Get-VstsInput -Name subDir -Require
 		$Script:workingDir = Get-VstsInput -Name workingdir -Require
 		$Script:destination = Get-VstsInput -Name destination -Require
 		$Script:gitTag = Get-VstsInput -Name gittag -Require
@@ -130,7 +131,7 @@ function Initialize() {
 function HandleDiff () {
 	# Diff between the two commits
 	Write-Host "##[command]"git diff --name-status "$old_commit_hash $new_commit_hash"
-	git diff --name-status $old_commit_hash $new_commit_hash | ForEach-Object {
+	git diff --name-status $old_commit_hash $new_commit_hash $subDir | ForEach-Object {
 		$item = @();
 		$item = $_.Split([char]0x0009);
 		Write-Host $item
