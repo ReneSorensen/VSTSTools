@@ -11,9 +11,9 @@
   ],
   "demands": [],
   "version": {
-    "Major": "6",
+    "Major": "7",
     "Minor": "0",
-    "Patch": "3"
+    "Patch": "1"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "GitCopyDiff $(message)",
@@ -74,6 +74,14 @@
       "defaultValue": false,
       "required": false,
       "helpMarkDown": "Flatten directory structure (all files to same directory)"
+    },
+    {
+      "name": "testIfTagFound",
+      "type": "boolean",
+      "label": "Test if tag is found in branch",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "If set to true, it will test if tag is found in branch, fail if not found"
     },
     {
       "name": "branchAsRoot",

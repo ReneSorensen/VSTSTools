@@ -23,8 +23,36 @@ M -- file added to folder --> X[Changed]
 
 U[Unsupported] -- file added to folder --> X[Changed]
 ```
+<!-- Markdown Grammar index https://github.com/github/linguist/blob/master/vendor/README.md -->
+### Yaml example
+```yaml
+steps:
+  - checkout: self
+    persistCredentials: True
 
+  - task: ATP.ATP-GitCopyDiff.GitCopyDiff.GitCopyDiff@6
+    displayName: Git Copy Diff
+    condition: and(succeeded(), ne(variables['${{parameters.deploy_reason}}'], 'Manual'))
+    inputs:
+      workingdir: '$(Build.SourcesDirectory)'
+      destination: '$(Build.SourcesDirectory)'
+      gittag: '${{parameters.LatestFeed}}'
+      testIfTagFound: false
+      branchAsRoot: 'origin/main'
+      nameOfFileDeletedList: '${{parameters.fileName}}'
+      textBeforeFile: ''
+      textAfterFile: ''
+```
 ## New features
+New field "testIfTagFound", if true it will test if tag is found, if not it will fail.
+
+How to find old commit, used for git diff
+- first find old commit using tag
+- if not found, then find the outbranch commit from default branch
+- if not found, then use branchAsRoot
+- and finaly using the first commit created for this repo
+
+## features
 Now using -LiteralPath instead of -Path
 New field that names the file, that contains all url's of files removed from the repository. New input fields that add text before and after the url of the deleted file from repository, before it adds it to the file.
 
@@ -50,7 +78,10 @@ Flatten directory structure (all files to same directory).
 
 ### Prerequisites
 * Repository must be Git.
+* Always added git-repo to the pipeline (build or release)
 * Allow scripts to access Oauth must be **Enabled**  
+ Select this check box in classic build pipelines if you want to enable your script to use the build pipeline OAuth token. This check box is located under the "additional settings" section after selecting the agent job in the pipeline
+ In yaml - add a checkout section with persistCredentials set to true.
 
 ## Credits
 

@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "ATP-GitTag",
     "name": "Git Tag",
-    "version": "6.0.4",
+    "version": "7.0.0",
     "publisher": "ATP",
     "targets": [
         {

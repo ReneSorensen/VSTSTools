@@ -11,9 +11,9 @@
 	],
 	"demands": [],
 	"version": {
-		"Major": "6",
+		"Major": "7",
 		"Minor": "0",
-		"Patch": "4"
+		"Patch": "0"
 	},
 	"minimumAgentVersion": "1.95.0",
 	"instanceNameFormat": "GitTag $(message)",
@@ -84,10 +84,6 @@
     }
 	],
 	"execution": {
-		"Node": {
-			"target": "tagging.js",
-			"argumentFormat": ""
-		},
 		"PowerShell3": {
 			"target": "tagging.ps1"
 		}

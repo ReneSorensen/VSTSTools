@@ -37,10 +37,12 @@ function Initialize() {
 		$shouldFlattenInput = Get-VstsInput -Name flatten
 		$changeTypeInput = Get-VstsInput -Name changeType -Require
 		$currentCommitInput = Get-VstsInput -Name currentcommit
+		$testIfTagFoundInput = Get-VstsInput -Name testIfTagFound -Require
 		# Script scoped variables
 		$Script:workingDir = Get-VstsInput -Name workingdir -Require
 		$Script:destination = Get-VstsInput -Name destination -Require
 		$Script:gitTag = Get-VstsInput -Name gittag -Require
+		[boolean]$Script:tagFound = [System.Convert]::ToBoolean($testIfTagFoundInput)
 		$Script:useBranchAsRoot = Get-VstsInput -Name branchAsRoot
 		$Script:changeType = $changeTypeInput.split(",")
 		[boolean]$Script:shouldFlatten = [System.Convert]::ToBoolean($shouldFlattenInput)
@@ -49,7 +51,7 @@ function Initialize() {
 		$Script:textAfterFile = Get-VstsInput -Name textAfterFile
 
 		# currentCommitInput is empty use HEAD
-		if(($Null -eq $currentCommitInput) -or ($currentCommitInput -eq '')) {
+		if([string]::IsNullOrEmpty($currentCommitInput)) {
 			$Script:currentCommit = "HEAD"
 		} else {
 			$Script:currentCommit = $currentCommitInput
@@ -90,7 +92,26 @@ function Initialize() {
 			} catch {
 				throw ("Error: Something went wrong. Please check the logs.")
 			}
-		}		
+		}
+		function FindBranchOutRoot ([String] $revArg) {
+			# Find branch out from default branch
+			$defaultBranch = (git remote show origin) | Select-String -Pattern 'HEAD branch:'
+			$defaultBranch = ($defaultBranch -replace 'HEAD branch:').Trim()
+			write-host "Repo default branch: "$defaultBranch
+			if(-not ([string]::IsNullOrEmpty($defaultBranch))) {
+				$baseRoot = (git rev-list ^origin/$($defaultBranch) --parents $($revArg)) | Select-Object -Last 1
+				if(-not ([string]::IsNullOrEmpty($baseroot))) {
+					$commit = $baseroot.Split([char]0x0009);
+					if($commit.length -le 1) {
+						$commit = $baseroot.Split();
+					}
+					$commit = $commit | Select-Object -Last 1
+					write-host "The branch out commit: "$commit
+					return $commit
+				}
+			}
+			return $Null
+		}
 
 		# Get the commit SHA-1 hash ID from $currentCommit
 		Set-Variable -name new_commit_hash -Value (GetGitHashId -revArg "$($currentCommit)") -Scope Script
@@ -99,12 +120,23 @@ function Initialize() {
 		# Get the commit SHA-1 hash ID from tag
 		Set-Variable -name old_commit_hash -Value (GetGitHashId -revArg "$($gitTag)") -Scope Script
 
+		# If tag-commit not found and test if 
+		if($tagFound -and ([string]::IsNullOrEmpty($old_commit_hash))) {
+			throw ("Error: TAG not found. Please check the logs and check branch for TAG.")
+		}
+
+		# Get the branch out commit from default branch
+		if([string]::IsNullOrEmpty($old_commit_hash)) {
+			Write-Host "Old commit not have been found using TAG, try from out branch from default branch."
+			Set-Variable -name old_commit_hash -Value (FindBranchOutRoot -revArg "$($new_commit_hash)") -Scope Script
+		}
+
 		# If commit not have been found, get the first commit form repo
-		if(($Null -eq $old_commit_hash) -or ($old_commit_hash -eq '') -and (-not ([string]::IsNullOrEmpty($useBranchAsRoot)))) {
+		if(([string]::IsNullOrEmpty($old_commit_hash)) -and (-not ([string]::IsNullOrEmpty($useBranchAsRoot)))) {
 			Write-Host "If old commit not have been found try with branchAsRoot as TAG: " $useBranchAsRoot
 			Set-Variable -name old_commit_hash -Value (GetGitHashId -revArg "$($useBranchAsRoot)") -Scope Script
 		}
-		if(($Null -eq $old_commit_hash) -or ($old_commit_hash -eq '')) {
+		if([string]::IsNullOrEmpty($old_commit_hash)) {
 			Write-Host "GitTag and branchAsRoot did not work, using the first commit created for this repo"
 			Write-Host "##[command]"git rev-list --max-parents=0 "$currentCommit"
 			Set-Variable -name old_commit_hash -Value (git rev-list --max-parents=0 $currentCommit) -Scope Script
@@ -133,6 +165,9 @@ function HandleDiff () {
 	git diff --name-status $old_commit_hash $new_commit_hash | ForEach-Object {
 		$item = @();
 		$item = $_.Split([char]0x0009);
+		if($item.length -lt 1) {
+			$item = $_.Split();
+		} 
 		Write-Host $item
 		if(($item.length -gt 1) -and ($changeType.Contains($item[0].Substring(0,1)))) {
 			switch ($item[0].Substring(0,1)) {

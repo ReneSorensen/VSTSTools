@@ -11,3 +11,6 @@ Tags the current branch with a specified tag and pushes it to origin.
 
 ## SQPplus Executer
 Execute file or sorted files in folder using application SQLPlus.
+
+## Set "Allow scripts to access the OAuth token" when using the tasks GITag and GITCopyDiff
+See https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml
